@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<title>打邱睦的屁股 🖐️🍑 10秒挑戰</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+    background: radial-gradient(circle at 50% 18%, #ffe9f0 0%, #ffd0e0 42%, #ffb3cf 100%);
+    display: flex; flex-direction: column; align-items: center;
+    user-select: none; touch-action: manipulation; color: #6b2b40;
+  }
+
+  header { text-align: center; padding: 12px 12px 4px; }
+  h1 { font-size: clamp(20px, 5.5vw, 32px); letter-spacing: 1px; }
+  h1 .emoji { -webkit-text-fill-color: initial; }
+  .sub { font-size: 13px; opacity: .65; margin-top: 2px; }
+
+  .stats { display: flex; gap: 8px; margin: 6px 0 2px; flex-wrap: wrap; justify-content: center; }
+  .stat {
+    background: rgba(255,255,255,.65); border-radius: 14px; padding: 5px 13px;
+    text-align: center; min-width: 72px; box-shadow: 0 3px 8px rgba(200,80,120,.18);
+  }
+  .stat .num { font-size: 21px; font-weight: 800; line-height: 1; }
+  .stat .lbl { font-size: 11px; opacity: .6; margin-top: 3px; }
+
+  /* 計時挑戰列 */
+  #challengeBar {
+    width: min(90vw, 440px); height: 26px; margin: 6px 0 0; position: relative;
+    background: rgba(255,255,255,.5); border-radius: 13px; overflow: hidden; display: none;
+  }
+  #timerFill { position: absolute; inset: 0; transform-origin: left; background: linear-gradient(90deg,#ff7eb3,#ff4d79); }
+  #timerText { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; color: #fff; text-shadow: 0 1px 2px rgba(180,40,80,.6); z-index: 1; }
+
+  #combo { height: 28px; font-size: 19px; font-weight: 900; color: #ff3d77; text-shadow: 0 2px 0 #fff; transition: transform .08s; opacity: 0; }
+
+  #stage {
+    position: relative; flex: 1; width: 100%; max-width: 480px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden;
+  }
+  #char { width: min(78vw, 330px); height: auto; transition: transform .07s; will-change: transform; }
+
+  .quip {
+    position: absolute; font-size: 22px; font-weight: 900; color: #ff2d6f;
+    text-shadow: 0 2px 0 #fff, 0 0 10px #ffb3cf; pointer-events: none;
+    animation: floatUp .9s ease-out forwards; white-space: nowrap;
+  }
+  @keyframes floatUp {
+    0% { transform: translate(-50%, 0) scale(.4) rotate(var(--r)); opacity: 0; }
+    20% { transform: translate(-50%, -10px) scale(1.2) rotate(var(--r)); opacity: 1; }
+    100% { transform: translate(-50%, -90px) scale(1) rotate(var(--r)); opacity: 0; }
+  }
+  .hand { position: absolute; font-size: 56px; pointer-events: none; animation: slap .25s ease-out forwards; transform-origin: center; }
+  @keyframes slap {
+    0% { transform: translate(-50%,-50%) scale(.3) rotate(-30deg); opacity: 0; }
+    40% { transform: translate(-50%,-50%) scale(1.4) rotate(10deg); opacity: 1; }
+    100% { transform: translate(-50%,-50%) scale(1) rotate(0deg); opacity: 0; }
+  }
+
+  footer { padding: 8px 12px 14px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center; }
+  button {
+    font-family: inherit; border: none; border-radius: 22px; padding: 11px 20px;
+    font-size: 15px; font-weight: 800; cursor: pointer; color: #fff;
+    background: linear-gradient(135deg, #ff7eb3, #ff4d79); box-shadow: 0 4px 12px rgba(255,77,121,.45);
+  }
+  button.ghost { background: rgba(255,255,255,.7); color: #b03a5b; box-shadow: none; font-weight: 700; padding: 9px 16px; font-size: 14px; }
+  button:active { transform: translateY(1px) scale(.97); }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+
+  #flash { position: fixed; inset: 0; pointer-events: none; background: #fff; opacity: 0; }
+  .shake { animation: shake .18s; }
+  @keyframes shake {
+    0%,100% { transform: translate(0,0); }
+    25% { transform: translate(-6px, 2px); } 50% { transform: translate(5px, -3px); } 75% { transform: translate(-3px, 1px); }
+  }
+
+  /* 結算畫面 */
+  #result {
+    position: fixed; inset: 0; background: rgba(60,10,30,.55); backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center; z-index: 10; padding: 20px;
+  }
+  #result .card {
+    background: #fff; border-radius: 24px; padding: 26px 28px; text-align: center; max-width: 360px; width: 100%;
+    box-shadow: 0 20px 50px rgba(120,20,60,.4); animation: pop .3s ease-out;
+  }
+  @keyframes pop { 0% { transform: scale(.7); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+  #result h2 { font-size: 22px; margin-bottom: 6px; }
+  #result .score { font-size: 64px; font-weight: 900; color: #ff3d77; line-height: 1; margin: 6px 0; }
+  #result .scoreLbl { font-size: 13px; opacity: .6; margin-bottom: 10px; }
+  #result .rank { font-size: 18px; font-weight: 800; margin: 8px 0 4px; }
+  #result .msg { font-size: 14px; opacity: .75; margin-bottom: 16px; }
+  #result .pb { font-size: 13px; color: #d4348b; font-weight: 700; margin-bottom: 14px; min-height: 18px; }
+  #result .btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+  <div id="flash"></div>
+  <header>
+    <h1><span class="emoji">🖐️</span> 打邱睦的屁股 <span class="emoji">🍑</span></h1>
+    <div class="sub" id="subtitle">按「10 秒挑戰」開始,看你手速多猛 💢</div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="num" id="total">0</div><div class="lbl">本回合次數</div></div>
+    <div class="stat"><div class="num" id="best">0</div><div class="lbl">最高連擊</div></div>
+    <div class="stat"><div class="num" id="record">0</div><div class="lbl">🏆 紀錄</div></div>
+  </div>
+
+  <div id="challengeBar"><div id="timerFill"></div><div id="timerText">10.0s</div></div>
+  <div id="combo"></div>
+
+  <div id="stage">
+    <svg id="char" viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="160" cy="238" rx="120" ry="16" fill="rgba(150,40,80,.15)"/>
+      <path d="M40,180 Q30,120 90,118 L210,118 Q280,118 290,170 Q295,210 250,215 L70,215 Q35,212 40,180 Z" fill="#7fc7ff" stroke="#4a9fe0" stroke-width="4"/>
+      <path d="M70,150 Q30,160 25,200 Q24,214 40,214 L70,214 Z" fill="#ffd9b8" stroke="#e0a878" stroke-width="3"/>
+      <circle cx="78" cy="120" r="40" fill="#ffd9b8" stroke="#e0a878" stroke-width="3"/>
+      <path d="M40,108 Q40,72 80,74 Q116,74 116,104 Q116,90 78,90 Q44,92 44,112 Z" fill="#3a2e2a"/>
+      <circle id="eyeL" cx="62" cy="124" r="4" fill="#3a2e2a"/>
+      <circle id="eyeR" cx="88" cy="122" r="4" fill="#3a2e2a"/>
+      <path id="mouth" d="M58,140 Q72,148 86,138" fill="none" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+      <rect x="120" y="135" width="62" height="22" rx="6" fill="#fff" stroke="#4a9fe0" stroke-width="2"/>
+      <text x="151" y="151" font-size="15" font-weight="800" text-anchor="middle" fill="#4a9fe0">邱睦</text>
+      <path d="M250,200 Q290,205 295,235 L260,235 Q235,232 240,205 Z" fill="#3b4a6b"/>
+      <g id="butt">
+        <ellipse cx="218" cy="168" rx="58" ry="46" fill="#ffd9b8" stroke="#e0a878" stroke-width="4"/>
+        <path d="M218,128 Q214,168 218,210" fill="none" stroke="#e0a878" stroke-width="3" opacity=".6"/>
+        <ellipse id="blushL" cx="198" cy="178" rx="0" ry="0" fill="#ff5b7f" opacity=".55"/>
+        <ellipse id="blushR" cx="240" cy="178" rx="0" ry="0" fill="#ff5b7f" opacity=".55"/>
+      </g>
+    </svg>
+  </div>
+
+  <footer>
+    <button id="startBtn">⏱️ 10 秒挑戰</button>
+    <button class="ghost" id="muteBtn">🔊 音效</button>
+  </footer>
+
+  <!-- 結算 -->
+  <div id="result"><div class="card">
+    <h2>⏰ 時間到!</h2>
+    <div class="score" id="finalScore">0</div>
+    <div class="scoreLbl">10 秒內拍打次數</div>
+    <div class="rank" id="rankText"></div>
+    <div class="msg" id="rankMsg"></div>
+    <div class="pb" id="pbText"></div>
+    <div class="btns">
+      <button id="againBtn">再來一次 🔁</button>
+      <button class="ghost" id="shareBtn">分享成績 📤</button>
+    </div>
+  </div></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const stage = $('stage'), char = $('char'), butt = $('butt');
+const blushL = $('blushL'), blushR = $('blushR'), mouth = $('mouth');
+
+let total = 0, combo = 0, best = 0, redness = 0, muted = false;
+let comboTimer = null;
+let mode = 'idle';        // idle | playing
+let timeLeft = 0, rafId = null, lastTs = 0, endTimer = null;
+let record = +(localStorage.getItem('spank_record') || 0);
+$('record').textContent = record;
+
+const QUIPS = ["啪!", "啪啪!", "痛痛!", "哎喲!", "嗚嗚~", "再打!", "唉唷喂呀", "好痛 QQ", "別打了啦", "🔥", "💢", "😖", "啪嗒!", "嘿!"];
+const SCREAMS = ["啊啊啊~", "嗚啊!!", "救命啊~", "媽呀!", "唉唷喂呀!!", "我錯了啦~"];
+
+// ===== Web Audio:升級版音效 =====
+let actx = null;
+function ensureAudio(){
+  if(!actx) actx = new (window.AudioContext||window.webkitAudioContext)();
+  if(actx.state === 'suspended') actx.resume();
+}
+// 拍打聲:力道(combo)越大 → 越脆、越響、低頻越沉;連擊讓音高微微往上爬(變調)
+function playSlap(combo){
+  if(muted) return; ensureAudio();
+  const t = actx.currentTime;
+  const power = Math.min(combo, 20) / 20;          // 0~1
+  const pitch = 1 + Math.min(combo, 30) * 0.02;    // 連擊變調:越打越高亢
+
+  // 高頻「啪」= 短雜訊
+  const len = 0.11, buf = actx.createBuffer(1, actx.sampleRate*len, actx.sampleRate);
+  const d = buf.getChannelData(0);
+  for(let i=0;i<d.length;i++){ d[i] = (Math.random()*2-1) * Math.pow(1 - i/d.length, 2.5); }
+  const src = actx.createBufferSource(); src.buffer = buf;
+  const bp = actx.createBiquadFilter(); bp.type = 'bandpass';
+  bp.frequency.value = (1100 + power*1800) * pitch;            // 力道大 → 更尖脆
+  bp.Q.value = 0.7 + power*0.8;
+  const g = actx.createGain();
+  g.gain.setValueAtTime(0.4 + power*0.4, t);
+  g.gain.exponentialRampToValueAtTime(0.001, t+len);
+  src.connect(bp); bp.connect(g); g.connect(actx.destination); src.start(t);
+
+  // 低頻「咚」= 肉感,力道越大越沉、連擊讓它略升
+  const o = actx.createOscillator(); o.type = 'sine';
+  const f0 = (150 + power*120) * Math.min(pitch, 1.4);
+  o.frequency.setValueAtTime(f0, t);
+  o.frequency.exponentialRampToValueAtTime(f0*0.4, t+0.11);
+  const og = actx.createGain();
+  og.gain.setValueAtTime(0.25 + power*0.3, t);
+  og.gain.exponentialRampToValueAtTime(0.001, t+0.13);
+  o.connect(og); og.connect(actx.destination); o.start(t); o.stop(t+0.14);
+}
+// 搞笑慘叫:卡通式「啊~」帶顫音 + 下滑音
+function playScream(){
+  if(muted) return; ensureAudio();
+  const t = actx.currentTime, dur = 0.5;
+  const base = 320 + Math.random()*120;
+  const o = actx.createOscillator(); o.type = 'sawtooth';
+  o.frequency.setValueAtTime(base, t);
+  o.frequency.linearRampToValueAtTime(base*1.5, t+0.08);
+  o.frequency.linearRampToValueAtTime(base*0.7, t+dur);       // 哀號下滑
+  // 顫音
+  const vib = actx.createOscillator(); vib.frequency.value = 14;
+  const vibg = actx.createGain(); vibg.gain.value = 22;
+  vib.connect(vibg); vibg.connect(o.frequency); vib.start(t); vib.stop(t+dur);
+  // 共振讓它像人聲
+  const bp = actx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value = base*3; bp.Q.value = 4;
+  const g = actx.createGain();
+  g.gain.setValueAtTime(0.001, t);
+  g.gain.linearRampToValueAtTime(0.28, t+0.05);
+  g.gain.exponentialRampToValueAtTime(0.001, t+dur);
+  o.connect(bp); bp.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+dur);
+}
+function playWhistle(){ // 結算哨音
+  if(muted) return; ensureAudio();
+  const t = actx.currentTime; const o = actx.createOscillator(); o.type='square';
+  o.frequency.setValueAtTime(900,t); o.frequency.linearRampToValueAtTime(1300,t+0.15);
+  const g = actx.createGain(); g.gain.setValueAtTime(0.18,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.4);
+  o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.42);
+}
+
+// ===== 視覺特效 =====
+function showQuip(x, y, text, big){
+  const q = document.createElement('div');
+  q.className = 'quip'; q.textContent = text;
+  q.style.left = x+'px'; q.style.top = y+'px';
+  q.style.setProperty('--r', (Math.random()*30-15)+'deg');
+  q.style.fontSize = (big ? 30 : 18 + Math.min(combo,15)) + 'px';
+  stage.appendChild(q); setTimeout(()=>q.remove(), 900);
+}
+function showHand(x, y){
+  const h = document.createElement('div');
+  h.className = 'hand'; h.textContent = '🖐️';
+  h.style.left = x+'px'; h.style.top = y+'px';
+  stage.appendChild(h); setTimeout(()=>h.remove(), 260);
+}
+function flash(){
+  const f = $('flash'); f.style.transition='none'; f.style.opacity='.5';
+  requestAnimationFrame(()=>{ f.style.transition='opacity .25s'; f.style.opacity='0'; });
+}
+
+// ===== 拍打 =====
+function spank(clientX, clientY){
+  const rect = stage.getBoundingClientRect();
+  const x = clientX-rect.left, y = clientY-rect.top;
+
+  total++; combo++; best = Math.max(best, combo);
+  redness = Math.min(redness+1, 30);
+  $('total').textContent = total; $('best').textContent = best;
+
+  const c = $('combo');
+  if(combo > 1){ c.textContent = combo+" 連擊!"; c.style.opacity='1'; c.style.transform='scale(1.3)';
+    setTimeout(()=>c.style.transform='scale(1)', 80); }
+  clearTimeout(comboTimer);
+  comboTimer = setTimeout(()=>{ combo=0; c.style.opacity='0'; }, 1200);
+
+  const r = redness/30;
+  butt.querySelector('ellipse').setAttribute('fill', `rgb(255,${Math.round(217-90*r)},${Math.round(184-90*r)})`);
+  const sz = 8+14*r; blushL.setAttribute('rx',sz); blushL.setAttribute('ry',sz*0.8);
+  blushR.setAttribute('rx',sz); blushR.setAttribute('ry',sz*0.8);
+  mouth.setAttribute('d', r>0.5 ? "M58,142 Q72,132 86,142" : "M58,140 Q72,148 86,138");
+
+  char.style.transform = 'translateY(3px) scale(1.03)';
+  setTimeout(()=>char.style.transform='', 70);
+  stage.classList.remove('shake'); void stage.offsetWidth; stage.classList.add('shake');
+
+  showHand(x, y);
+  playSlap(combo);
+  // 慘叫:連擊里程碑必叫,平時偶爾叫
+  if(combo>0 && combo%10===0){ playScream(); showQuip(x, y-30, SCREAMS[Math.floor(Math.random()*SCREAMS.length)], true); }
+  else { if(Math.random()<0.12) playScream(); showQuip(x, y-20, QUIPS[Math.floor(Math.random()*QUIPS.length)]); }
+
+  if(combo>=5) flash();
+  navigator.vibrate && navigator.vibrate(combo>=5?30:15);
+}
+
+stage.addEventListener('pointerdown', e => { e.preventDefault(); ensureAudio(); spank(e.clientX, e.clientY); });
+
+// ===== 10 秒挑戰 =====
+function startChallenge(){
+  ensureAudio();
+  mode = 'playing';
+  total = 0; combo = 0; best = 0; redness = 0;
+  $('total').textContent = 0; $('best').textContent = 0; $('combo').style.opacity='0';
+  butt.querySelector('ellipse').setAttribute('fill', '#ffd9b8');
+  blushL.setAttribute('rx',0); blushL.setAttribute('ry',0);
+  blushR.setAttribute('rx',0); blushR.setAttribute('ry',0);
+  mouth.setAttribute('d', "M58,140 Q72,148 86,138");
+  $('result').style.display='none';
+  $('startBtn').disabled = true; $('startBtn').textContent = '加油拍!💥';
+  $('subtitle').textContent = '快拍!時間倒數中… ⏰';
+  $('challengeBar').style.display = 'block';
+
+  timeLeft = 10.0; lastTs = performance.now();
+  const fill = $('timerFill');
+  cancelAnimationFrame(rafId); clearTimeout(endTimer);
+  // 權威結束計時(背景分頁 rAF 會被暫停,這個保證準時結算)
+  endTimer = setTimeout(() => endChallenge(), 10000);
+  const tick = (ts) => {
+    if(mode !== 'playing') return;
+    const dt = (ts-lastTs)/1000; lastTs = ts; timeLeft = Math.max(0, timeLeft-dt);
+    fill.style.transform = `scaleX(${timeLeft/10})`;
+    $('timerText').textContent = timeLeft.toFixed(1)+'s';
+    fill.style.background = timeLeft <= 3 ? 'linear-gradient(90deg,#ff3b3b,#ff6b6b)' : 'linear-gradient(90deg,#ff7eb3,#ff4d79)';
+    if(timeLeft > 0) rafId = requestAnimationFrame(tick);
+  };
+  rafId = requestAnimationFrame(tick);
+}
+
+function rankFor(score){
+  if(score >= 120) return {r:'🏆 拍打之神', m:'這不是人類的手速…邱睦升天了 👼'};
+  if(score >= 90)  return {r:'🔥 暴怒鐵掌', m:'手速猛獸!屁股已冒煙 💨'};
+  if(score >= 65)  return {r:'💪 連擊高手', m:'很猛喔!邱睦在求饒了'};
+  if(score >= 40)  return {r:'😏 漸入佳境', m:'手感不錯,再快一點!'};
+  if(score >= 20)  return {r:'🐣 新手上路', m:'熱身而已嘛~再來一次!'};
+  return {r:'😴 摸魚中', m:'你是在拍還是在摸?再試試!'};
+}
+
+function endChallenge(){
+  if(mode !== 'playing') return;
+  cancelAnimationFrame(rafId); clearTimeout(endTimer);
+  mode = 'idle';
+  $('challengeBar').style.display = 'none';
+  $('startBtn').disabled = false; $('startBtn').textContent = '⏱️ 10 秒挑戰';
+  $('subtitle').textContent = '按「10 秒挑戰」開始,看你手速多猛 💢';
+  playWhistle();
+
+  const score = total;
+  $('finalScore').textContent = score;
+  const {r, m} = rankFor(score);
+  $('rankText').textContent = r; $('rankMsg').textContent = m;
+  if(score > record){
+    record = score; localStorage.setItem('spank_record', record);
+    $('record').textContent = record;
+    $('pbText').textContent = '🎉 新紀錄!破了你自己的最高分!';
+  } else {
+    $('pbText').textContent = '個人最佳:' + record + ' 下';
+  }
+  $('result').style.display = 'flex';
+}
+
+$('startBtn').addEventListener('click', startChallenge);
+$('againBtn').addEventListener('click', startChallenge);
+$('muteBtn').addEventListener('click', () => {
+  muted = !muted; $('muteBtn').textContent = muted ? '🔇 靜音' : '🔊 音效';
+  if(!muted) ensureAudio();
+});
+$('shareBtn').addEventListener('click', async () => {
+  const score = $('finalScore').textContent;
+  const text = `我在「打邱睦的屁股 🍑」10 秒挑戰拍了 ${score} 下!你敢來比嗎? 💢`;
+  try {
+    if(navigator.share){ await navigator.share({title:'打邱睦的屁股', text, url: location.href}); }
+    else { await navigator.clipboard.writeText(text+' '+location.href); $('shareBtn').textContent='已複製!📋';
+      setTimeout(()=>$('shareBtn').textContent='分享成績 📤', 1500); }
+  } catch(e){}
+});
+</script>
+</body>
+</html>
